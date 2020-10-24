@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.parse.ParseException;
@@ -36,6 +37,7 @@ public class newPost extends AppCompatActivity {
     private EditText etDescription;
     private ImageView ivPostImage;
     private ActionBar actionBar;
+    private ProgressBar pbProgress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +50,7 @@ public class newPost extends AppCompatActivity {
         btPost = findViewById(R.id.btPost);
         btTakePicture = findViewById(R.id.btTakePicture);
         etDescription = findViewById(R.id.etDescription);
+        pbProgress = findViewById(R.id.pbProgress);
 
         btPost.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -126,6 +129,7 @@ public class newPost extends AppCompatActivity {
     }
 
     private void savePost(String description, ParseUser currentUser, File photoFile) {
+        pbProgress.setVisibility(ProgressBar.VISIBLE);
         Post post = new Post();
         post.setDescription(description);
         post.setUser(currentUser);
@@ -137,6 +141,7 @@ public class newPost extends AppCompatActivity {
                     Log.e("newPost", "Error while saving.....", e);
                     Toast.makeText(newPost.this, "Error while posting", Toast.LENGTH_SHORT).show();
                 }
+                pbProgress.setVisibility(ProgressBar.INVISIBLE);
                 finish();
             }
         });
