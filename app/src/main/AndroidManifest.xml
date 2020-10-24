@@ -12,6 +12,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".SignupActivity"></activity>
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -23,7 +24,7 @@
                 android:resource="@xml/fileprovider" />
         </provider>
 
-        <activity android:name=".newPost"></activity>
+        <activity android:name=".newPost" />
         <activity android:name=".MainActivity" />
         <activity android:name=".LoginActivity">
             <intent-filter>

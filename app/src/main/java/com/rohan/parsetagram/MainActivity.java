@@ -52,17 +52,16 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main,menu);
+        getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if(item.getItemId() == R.id.miNewPost){
+        if (item.getItemId() == R.id.miNewPost) {
             Intent i = new Intent(this, newPost.class);
             startActivity(i);
-        }
-        else if(item.getItemId()== R.id.miLogout){
+        } else if (item.getItemId() == R.id.miLogout) {
             ParseUser.logOut();
             Intent i = new Intent(this, LoginActivity.class);
             startActivity(i);
@@ -77,12 +76,12 @@ public class MainActivity extends AppCompatActivity {
         query.findInBackground(new FindCallback<Post>() {
             @Override
             public void done(List<Post> posts, ParseException e) {
-                if(e!=null){
+                if (e != null) {
                     Log.e("MainActivity", "error getting posts", e);
                     return;
                 }
 
-                for(Post post:posts){
+                for (Post post : posts) {
                 }
             }
         });

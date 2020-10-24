@@ -1,5 +1,6 @@
 package com.rohan.parsetagram;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -18,18 +19,24 @@ public class LoginActivity extends AppCompatActivity {
     private EditText etUsername;
     private EditText etPassword;
     private Button btLogin;
+    private Button btSignup;
+    private ActionBar actionBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        if(ParseUser.getCurrentUser()!=null){
+        if (ParseUser.getCurrentUser() != null) {
             switchToMain();
         }
+
+        actionBar = getSupportActionBar();
+        actionBar.hide();
 
         etUsername = findViewById(R.id.etUsername);
         etPassword = findViewById(R.id.etPassword);
         btLogin = findViewById(R.id.btLogin);
+        btSignup =findViewById(R.id.btSignup);
 
         btLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -40,17 +47,25 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        btSignup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(LoginActivity.this, SignupActivity.class);
+                startActivity(i);
+            }
+        });
+
     }
 
     private void loginUser(String username, String password) {
         ParseUser.logInInBackground(username, password, new LogInCallback() {
             @Override
             public void done(ParseUser user, ParseException e) {
-                if(e!=null){
-                    Log.e("LoginActivity", "Issue with Login",e);
+                if (e != null) {
+                    Log.e("LoginActivity", "Issue with Login", e);
                     return;
                 }
-                
+
                 switchToMain();
             }
         });

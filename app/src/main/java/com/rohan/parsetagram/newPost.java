@@ -1,6 +1,7 @@
 package com.rohan.parsetagram;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 
@@ -34,11 +35,15 @@ public class newPost extends AppCompatActivity {
     private Button btTakePicture;
     private EditText etDescription;
     private ImageView ivPostImage;
+    private ActionBar actionBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_post);
+
+        actionBar = getSupportActionBar();
+        actionBar.setTitle("New Post");
 
         btPost = findViewById(R.id.btPost);
         btTakePicture = findViewById(R.id.btTakePicture);
@@ -52,8 +57,8 @@ public class newPost extends AppCompatActivity {
                     Toast.makeText(newPost.this, "Description cannot be empty", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if(photoFile==null || ivPostImage.getDrawable()==null){
-                    Toast.makeText(newPost.this,"There is no image!!", Toast.LENGTH_SHORT).show();
+                if (photoFile == null || ivPostImage.getDrawable() == null) {
+                    Toast.makeText(newPost.this, "There is no image!!", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 ParseUser currentUser = ParseUser.getCurrentUser();
@@ -112,7 +117,7 @@ public class newPost extends AppCompatActivity {
         File mediaStorageDir = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), "newPost");
 
         // Create the storage directory if it does not exist
-        if (!mediaStorageDir.exists() && !mediaStorageDir.mkdirs()){
+        if (!mediaStorageDir.exists() && !mediaStorageDir.mkdirs()) {
             Log.d("newPost", "failed to create directory");
         }
 
