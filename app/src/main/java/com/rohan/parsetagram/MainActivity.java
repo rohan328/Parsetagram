@@ -3,6 +3,12 @@ package com.rohan.parsetagram;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,17 +17,27 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
+import com.google.android.material.bottomnavigation.BottomNavigationItemView;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.rohan.parsetagram.fragments.homeFragment;
+import com.rohan.parsetagram.fragments.newPostFragment;
+import com.rohan.parsetagram.fragments.profileFragment;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     private ActionBar actionBar;
+
+    private BottomNavigationView bottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,10 +45,37 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         actionBarSetup();
+        final FragmentManager fragmentManager=getSupportFragmentManager();
 
+        bottomNavigationView = findViewById(R.id.bottomNavigation);
 
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                Fragment fragment = new Fragment();
+                switch (menuItem.getItemId()) {
+                    case R.id.action_home:
+                        fragment=new homeFragment();
+                        break;
+                    case R.id.action_compose:
+                        fragment=new newPostFragment();
+                        break;
+                    case R.id.action_profile:
+                        fragment=new profileFragment();
+                        break;
+                    default:
+                        break;
+                }
+                fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();
+                return true;
+            }
+        });
+        bottomNavigationView.setSelectedItemId(R.id.action_home);
     }
 
+    public void setHome(){
+        bottomNavigationView.setSelectedItemId(R.id.action_home);
+    }
     private void actionBarSetup() {
         actionBar = getSupportActionBar();
         actionBar.setTitle("");
@@ -47,43 +90,5 @@ public class MainActivity extends AppCompatActivity {
                 | Gravity.CENTER_VERTICAL);
         imageView.setLayoutParams(layoutParams);
         actionBar.setCustomView(imageView);
-    }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.miNewPost) {
-            Intent i = new Intent(this, newPost.class);
-            startActivity(i);
-        } else if (item.getItemId() == R.id.miLogout) {
-            ParseUser.logOut();
-            Intent i = new Intent(this, LoginActivity.class);
-            startActivity(i);
-            finish();
-        }
-        return true;
-    }
-
-    private void queryPosts() {
-        ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
-        query.include(Post.KEY_USER);
-        query.findInBackground(new FindCallback<Post>() {
-            @Override
-            public void done(List<Post> posts, ParseException e) {
-                if (e != null) {
-                    Log.e("MainActivity", "error getting posts", e);
-                    return;
-                }
-
-                for (Post post : posts) {
-                }
-            }
-        });
     }
 }

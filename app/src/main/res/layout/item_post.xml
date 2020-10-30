@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="5dp"
+    android:layout_marginTop="5dp"
+    android:layout_marginEnd="5dp">
+
+    <ImageView
+        android:id="@+id/postUserImage"
+        android:layout_width="110px"
+        android:layout_height="110px"
+        android:layout_above="@+id/postImage"
+        android:layout_marginTop="5dp"
+        android:adjustViewBounds="false"
+        android:cropToPadding="false"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/postUsername"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_toEndOf="@+id/postUserImage"
+        android:text="Rohan Ohlan"
+        android:textSize="18sp" />
+
+    <ImageView
+        android:id="@+id/postImage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/postUsername"
+        android:layout_marginTop="5dp"
+        android:scaleType="fitCenter"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/postCUsername"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/postImage"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:text="username"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/postComment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/postImage"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_toEndOf="@+id/postCUsername"
+        android:text="TextView" />
+
+</RelativeLayout>
